@@ -10,40 +10,24 @@ public class GUI extends JFrame {
     private static final int ROWS = 8;
     private static final int COLS = 8;
 
-    private Feld[][] board = new Feld[ROWS][COLS];
-
-    private void initBoard() {
-        // Startaufstellung mit Figur-Objekten
-        String[][] start = {
-                {"\u265C", "\u265E", "\u265D", "\u265B", "\u265A", "\u265D", "\u265E", "\u265C"},
-                {"\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F"},
-                {"", "", "", "", "", "", "", ""},
-                {"", "", "", "", "", "", "", ""},
-                {"", "", "", "", "", "", "", ""},
-                {"", "", "", "", "", "", "", ""},
-                {"\u2659", "\u2659", "\u2659", "\u2659", "\u2659", "\u2659", "\u2659", "\u2659"},
-                {"\u2656", "\u2658", "\u2657", "\u2655", "\u2654", "\u2657", "\u2658", "\u2656"},
-        };
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLS; col++) {
-                String s = start[row][col];
-                Figur figur = null;
-                if (!s.isEmpty()) {
-                    Figur.Farbe farbe = (row < 2) ? Figur.Farbe.SCHWARZ : Figur.Farbe.WEISS;
-                    figur = new Figur(s, farbe);
-                }
-                board[row][col] = new Feld(row, col, figur);
-            }
-        }
-    }
+    private Schachbrett schachbrett;
 
     public GUI() {
-        setTitle("Schachbrett mit korrekten Figurenfarben");
+        setTitle("Schach");
         setSize(TILE_SIZE * COLS, TILE_SIZE * ROWS);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        initBoard();
+        JMenuBar menuBar = new JMenuBar();
+        JMenu spielMenu = new JMenu("Spiel");
+        JMenuItem speichernItem = new JMenuItem("Speichern");
+        JMenuItem neustartItem = new JMenuItem("Neustarten");
+        spielMenu.add(speichernItem);
+        spielMenu.add(neustartItem);
+        menuBar.add(spielMenu);
+        setJMenuBar(menuBar);
+
+        schachbrett = new Schachbrett();
         setLayout(new GridLayout(ROWS, COLS));
 
         for (int row = 0; row < ROWS; row++) {
@@ -53,7 +37,7 @@ public class GUI extends JFrame {
                 Color bgColor = isLight ? Color.LIGHT_GRAY : Color.DARK_GRAY;
                 cell.setBackground(bgColor);
 
-                Feld feld = board[row][col];
+                Feld feld = schachbrett.getFeld(row, col);
                 Figur figur = feld.getFigur();
                 JLabel label = new JLabel(figur != null ? figur.getSymbol() : "", SwingConstants.CENTER);
                 label.setFont(new Font("Serif", Font.PLAIN, 36));
@@ -69,7 +53,6 @@ public class GUI extends JFrame {
                 add(cell);
             }
         }
-
         setVisible(true);
     }
 
