@@ -1,7 +1,12 @@
 public class Bauer extends Figur
 {
-public Bauer(Feld feld)
+    private Feld feld;
+    public Bauer(Feld feld)
     {
-
+        this.feld = feld;
+    }
+    public Feld getFeld()
+    {
+        return feld;
     }
 }
