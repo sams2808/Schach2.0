@@ -18,15 +18,35 @@ public class GUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JMenuBar menuBar = new JMenuBar();
+        // Startmenü als Dialog anzeigen
+        Object[] options = {"Laden", "Starten", "Beenden"};
+        int auswahl = JOptionPane.showOptionDialog(
+                this,
+                "Willkommen zum Schachspiel! Was möchtest du tun?",
+                "Start-Menu",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[1]
+        );
+        if (auswahl == 0) {
+            System.out.println("Laden gewählt");
+            // Ladefunktionalität hier ergänzen
+        } else if (auswahl == 1) {
+            System.out.println("Starten gewählt");
+            // Spielstart, einfach fortfahren
+        } else if (auswahl == 2) {
+            System.exit(0);
+        }
+
+
         JMenu spielMenu = new JMenu("Spiel");
         JMenuItem speichernItem = new JMenuItem("Speichern");
         JMenuItem neustartItem = new JMenuItem("Neustarten");
         spielMenu.add(speichernItem);
         spielMenu.add(neustartItem);
-        menuBar.add(spielMenu);
-        setJMenuBar(menuBar);
-
+        setContentPane(spielMenu);
         schachbrett = new Schachbrett();
         setLayout(new GridLayout(ROWS, COLS));
 
@@ -48,7 +68,10 @@ public class GUI extends JFrame {
                 final int clickedRow = row;
                 final int clickedCol = col;
                 cell.addMouseListener(new MouseAdapter() {
-                    // Hier kann später Spiellogik für Züge ergänzt werden
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        System.out.println("Feld ausgewählt: Zeile " + clickedRow + ", Spalte " + clickedCol);
+                    }
                 });
                 add(cell);
             }
