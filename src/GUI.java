@@ -1,45 +1,79 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 
 public class GUI extends JFrame {
-    public GUI() {
-        setTitle("Schachbrett");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 600);
-        setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(8, 8));
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                JPanel feld = new JPanel(new BorderLayout());
-                if ((i + j) % 2 == 0) {
-                    feld.setBackground(Color.WHITE);
-                } else {
-                    feld.setBackground(Color.DARK_GRAY);
+    private static final int TILE_SIZE = 80;
+    private static final int ROWS = 8;
+    private static final int COLS = 8;
+
+    private Feld[][] board = new Feld[ROWS][COLS];
+
+    private void initBoard() {
+        // Startaufstellung mit Figur-Objekten
+        String[][] start = {
+                {"\u265C", "\u265E", "\u265D", "\u265B", "\u265A", "\u265D", "\u265E", "\u265C"},
+                {"\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F", "\u265F"},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"\u2659", "\u2659", "\u2659", "\u2659", "\u2659", "\u2659", "\u2659", "\u2659"},
+                {"\u2656", "\u2658", "\u2657", "\u2655", "\u2654", "\u2657", "\u2658", "\u2656"},
+        };
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                String s = start[row][col];
+                Figur figur = null;
+                if (!s.isEmpty()) {
+                    Figur.Farbe farbe = (row < 2) ? Figur.Farbe.SCHWARZ : Figur.Farbe.WEISS;
+                    figur = new Figur(s, farbe);
                 }
-                // Schwarzes Pferd (Springer) auf Feld b8 (i==0, j==1)
-                if (i == 0 && j == 1) {
-                    try {
-                        // Korrekte Pfadangabe für Ressourcen im Klassenpfad
-                        ImageIcon icon = new ImageIcon(getClass().getResource("src/figuren/img.png"));
-                        JLabel label = new JLabel(icon);
-                        label.setHorizontalAlignment(JLabel.CENTER);
-                        label.setVerticalAlignment(JLabel.CENTER);
-                        feld.add(label, BorderLayout.CENTER);
-                    } catch (Exception e) {
-                        e.printStackTrace(); // Fehlerausgabe für Debugging
-                    }
-                }
-                panel.add(feld);
+                board[row][col] = new Feld(row, col, figur);
             }
         }
-        add(panel);
+    }
+
+    public GUI() {
+        setTitle("Schachbrett mit korrekten Figurenfarben");
+        setSize(TILE_SIZE * COLS, TILE_SIZE * ROWS);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        initBoard();
+        setLayout(new GridLayout(ROWS, COLS));
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                JPanel cell = new JPanel(new BorderLayout());
+                boolean isLight = (row + col) % 2 == 0;
+                Color bgColor = isLight ? Color.LIGHT_GRAY : Color.DARK_GRAY;
+                cell.setBackground(bgColor);
+
+                Feld feld = board[row][col];
+                Figur figur = feld.getFigur();
+                JLabel label = new JLabel(figur != null ? figur.getSymbol() : "", SwingConstants.CENTER);
+                label.setFont(new Font("Serif", Font.PLAIN, 36));
+                if (figur != null) {
+                    label.setForeground(figur.getFarbe() == Figur.Farbe.WEISS ? Color.WHITE : Color.BLACK);
+                }
+                cell.add(label, BorderLayout.CENTER);
+                final int clickedRow = row;
+                final int clickedCol = col;
+                cell.addMouseListener(new MouseAdapter() {
+                    // Hier kann später Spiellogik für Züge ergänzt werden
+                });
+                add(cell);
+            }
+        }
+
+        setVisible(true);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GUI gui = new GUI();
-            gui.setVisible(true);
-        });
+        SwingUtilities.invokeLater(GUI::new);
     }
 }
