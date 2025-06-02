@@ -1,2 +1,7 @@
-public class Bauer extends {
+public class Bauer extends Figur
+{
+public Bauer(Feld feld)
+    {
+
+    }
 }
