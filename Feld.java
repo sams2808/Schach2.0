@@ -9,4 +9,8 @@ public class Feld
     {
         this.figur = figur;
     }
+    public Figur figurGeben()
+    {
+        return figur;
+    }
 }
