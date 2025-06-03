@@ -19,13 +19,11 @@ public class Bauer extends Figur
         ArrayList<Feld> felder = feld.brettGeben().felder;
         int i = felder.indexOf(feld) + 1;
 
-        // Prüfe, ob i im gültigen Bereich ist
         if (i < felder.size() && felder.get(i).figurGeben() == null) {
             M.add(felder.get(i));
         }
 
         if (ersterZug) {
-            // Prüfe, ob i+1 im gültigen Bereich ist
             if (i + 1 < felder.size() && felder.get(i).figurGeben() == null && felder.get(i + 1).figurGeben() == null)
             {
                 M.add(felder.get(i + 1));
@@ -33,7 +31,6 @@ public class Bauer extends Figur
         }
 
         if (feld.brettGeben().schwarz.contains(this)) {
-            // Prüfe, ob i+8 und i-8 im gültigen Bereich sind
             if (i + 8 < felder.size() && feld.brettGeben().weiß.contains(felder.get(i + 8).figurGeben()))
             {
                 M.add(felder.get(i + 8));
@@ -44,5 +41,14 @@ public class Bauer extends Figur
             }
         }
         return M;
+    }
+    public boolean obSetztSchach() {
+        ArrayList<Feld> list = this.möglicheZüge();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).figurGeben() instanceof König) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -11,22 +11,13 @@ public class Figur
     {
         return null;
     }
-    public boolean obSetztSchach()
-    {
-        int k = 0;
+    public boolean obSetztSchach() {
         ArrayList<Feld> list = this.möglicheZüge();
-        while (int i = 0; i < list.size(); i++)
-        {
-            if(list.get(i).figurGeben() instanceof König);
-            k++;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).figurGeben() instanceof König) {
+                return true;
+            }
         }
-        if(k > 0)
-        {
-            return true
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 }
