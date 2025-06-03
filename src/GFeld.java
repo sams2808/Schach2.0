@@ -26,4 +26,10 @@ public class GFeld {
     public int getCol() {
         return col;
     }
+
+    public String getName() {
+        char colChar = (char) ('A' + col);
+        int rowNum = 8 - row; // Umwandlung von 0-7 nach 1-8
+        return String.valueOf(colChar) + rowNum;
+    }
 }
