@@ -28,7 +28,7 @@ public class Bauer extends Figur
                     M.add(feld.brettGeben().felder(i+1));
                 }
             }
-            if()
+            if(feld.brettGeben().schwarz.contains(this))
             if(feld.brettGeben().schwarz.contains(feld.brettGeben().felder(i+8).figurGeben()) == true)
     }
 
