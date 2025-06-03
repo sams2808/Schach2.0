@@ -1,11 +1,11 @@
 package src;
 
-public class Feld {
+public class GFeld {
     private GFigur GFigur;
     private final int row;
     private final int col;
 
-    public Feld(int row, int col, GFigur GFigur) {
+    public GFeld(int row, int col, GFigur GFigur) {
         this.row = row;
         this.col = col;
         this.GFigur = GFigur;

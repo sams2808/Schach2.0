@@ -19,26 +19,32 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
 
         // Startmenü als Dialog anzeigen
-        Object[] options = {"Laden", "Starten", "Beenden"};
-        int auswahl = JOptionPane.showOptionDialog(
-                this,
-                "Willkommen zum Schachspiel! Was möchtest du tun?",
-                "Start-Menu",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                options,
-                options[1]
-        );
-        if (auswahl == 0) {
-            System.out.println("Laden gewählt");
-            // Ladefunktionalität hier ergänzen
-        } else if (auswahl == 1) {
-            System.out.println("Starten gewählt");
-            // Spielstart, einfach fortfahren
-        } else if (auswahl == 2) {
-            System.exit(0);
+        // Im Konstruktor von GUI
+        while (true) {
+            Object[] options = {"Laden", "Starten", "Beenden"};
+            int auswahl = JOptionPane.showOptionDialog(
+                    this,
+                    "Willkommen zum Schachspiel! Was möchtest du tun?",
+                    "Start-Menu",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    options,
+                    options[1]
+            );
+
+            if (auswahl == 0) {
+                System.out.println("Laden gewählt");
+                JOptionPane.showMessageDialog(this, "Lade Spielstand... (Funktion noch nicht implementiert)", "Info", JOptionPane.INFORMATION_MESSAGE);
+                // Nach dem Laden wird die Schleife fortgesetzt und das Menü erscheint erneut
+            } else if (auswahl == 1) {
+                System.out.println("Starten gewählt");
+                break; // Schleife verlassen, Spiel startet
+            } else if (auswahl == 2) {
+                System.exit(0);
+            }
         }
+
 
 
         JMenu spielMenu = new JMenu("Spiel");
@@ -57,8 +63,8 @@ public class GUI extends JFrame {
                 Color bgColor = isLight ? Color.LIGHT_GRAY : Color.DARK_GRAY;
                 cell.setBackground(bgColor);
 
-                Feld feld = GSchachbrett.getFeld(row, col);
-                GFigur gFigur = feld.getFigur();
+                GFeld GFeld = GSchachbrett.getFeld(row, col);
+                GFigur gFigur = GFeld.getFigur();
                 JLabel label = new JLabel(gFigur != null ? gFigur.getSymbol() : "", SwingConstants.CENTER);
                 label.setFont(new Font("Serif", Font.PLAIN, 36));
                 if (gFigur != null) {
