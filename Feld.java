@@ -1,9 +1,12 @@
 public class Feld
 {
     private Figur figur;
-    public Feld(String name)
+    private String name;
+    private Schachbrett brett;
+    public Feld(String name, Schachbrett brett)
     {
-
+        this.name = name;
+        this.brett = brett;
     }
     public void figurHinzufügen(Figur figur)
     {
@@ -12,5 +15,9 @@ public class Feld
     public Figur figurGeben()
     {
         return figur;
+    }
+    public Schachbrett brettGeben()
+    {
+        return brett;
     }
 }

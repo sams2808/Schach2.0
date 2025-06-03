@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 public class Schachbrett
 {
-    private final ArrayList<Figur> schwarz = new ArrayList<>();
-    private final ArrayList<Figur> weiß = new ArrayList<>();
-    private final ArrayList<Feld> felder = new ArrayList<>();
+    public final ArrayList<Figur> schwarz = new ArrayList<>();
+    public final ArrayList<Figur> weiß = new ArrayList<>();
+    public final ArrayList<Feld> felder = new ArrayList<>();
     private boolean momentanerSpieler;
 
     public Schachbrett()
@@ -14,7 +14,7 @@ public class Schachbrett
             for (int i = 1; i <= 8; i++)
             {
                 String name = "" + c + i;
-                felder.add(new Feld(name));
+                felder.add(new Feld(name, this));
             }
         }
             //Bauern erstellen und ihnen Felder zuweisen

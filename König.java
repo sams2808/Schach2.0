@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class König extends Figur
 {
     private Feld feld;
@@ -8,5 +10,9 @@ public class König extends Figur
     public Feld getFeld()
     {
         return feld;
+    }
+    @Override public ArrayList möglicheZüge()
+    {
+        return null;
     }
 }

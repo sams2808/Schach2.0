@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Dame extends Figur
 {
     private Feld feld;
@@ -9,4 +11,9 @@ public class Dame extends Figur
     {
         return feld;
     }
+    @Override public ArrayList möglicheZüge()
+    {
+        return null;
+    }
+
 }
