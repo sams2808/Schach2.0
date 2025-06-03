@@ -29,7 +29,9 @@ public class Bauer extends Figur
                 }
             }
             if(feld.brettGeben().schwarz.contains(this))
+            {
             if(feld.brettGeben().schwarz.contains(feld.brettGeben().felder(i+8).figurGeben()) == true)
+            }
     }
 
 }
