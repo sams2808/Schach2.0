@@ -1,17 +1,16 @@
 package src;
 
-public class Figur {
+public class GFigur {
 
     public enum Farbe { WEISS, SCHWARZ }
 
     private final String symbol;
     private final Farbe farbe;
 
-    public Figur(String symbol, Farbe farbe) {
+    public GFigur(String symbol, Farbe farbe) {
         this.symbol = symbol;
         this.farbe = farbe;
     }
-
     public String getSymbol() {
         return symbol;
     }

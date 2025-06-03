@@ -10,7 +10,7 @@ public class GUI extends JFrame {
     private static final int ROWS = 8;
     private static final int COLS = 8;
 
-    private Schachbrett schachbrett;
+    private GSchachbrett GSchachbrett;
 
     public GUI() {
         setTitle("Schach");
@@ -47,7 +47,7 @@ public class GUI extends JFrame {
         spielMenu.add(speichernItem);
         spielMenu.add(neustartItem);
         setContentPane(spielMenu);
-        schachbrett = new Schachbrett();
+        GSchachbrett = new GSchachbrett();
         setLayout(new GridLayout(ROWS, COLS));
 
         for (int row = 0; row < ROWS; row++) {
@@ -57,12 +57,12 @@ public class GUI extends JFrame {
                 Color bgColor = isLight ? Color.LIGHT_GRAY : Color.DARK_GRAY;
                 cell.setBackground(bgColor);
 
-                Feld feld = schachbrett.getFeld(row, col);
-                Figur figur = feld.getFigur();
-                JLabel label = new JLabel(figur != null ? figur.getSymbol() : "", SwingConstants.CENTER);
+                Feld feld = GSchachbrett.getFeld(row, col);
+                GFigur gFigur = feld.getFigur();
+                JLabel label = new JLabel(gFigur != null ? gFigur.getSymbol() : "", SwingConstants.CENTER);
                 label.setFont(new Font("Serif", Font.PLAIN, 36));
-                if (figur != null) {
-                    label.setForeground(figur.getFarbe() == Figur.Farbe.WEISS ? Color.WHITE : Color.BLACK);
+                if (gFigur != null) {
+                    label.setForeground(gFigur.getFarbe() == GFigur.Farbe.WEISS ? Color.WHITE : Color.BLACK);
                 }
                 cell.add(label, BorderLayout.CENTER);
                 final int clickedRow = row;

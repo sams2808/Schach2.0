@@ -1,22 +1,22 @@
 package src;
 
 public class Feld {
-    private Figur figur;
+    private GFigur GFigur;
     private final int row;
     private final int col;
 
-    public Feld(int row, int col, Figur figur) {
+    public Feld(int row, int col, GFigur GFigur) {
         this.row = row;
         this.col = col;
-        this.figur = figur;
+        this.GFigur = GFigur;
     }
 
-    public Figur getFigur() {
-        return figur;
+    public GFigur getFigur() {
+        return GFigur;
     }
 
-    public void setFigur(Figur figur) {
-        this.figur = figur;
+    public void setFigur(GFigur GFigur) {
+        this.GFigur = GFigur;
     }
 
     public int getRow() {
