@@ -13,8 +13,7 @@ public class Bauer extends Figur
     {
         return feld;
     }
-    @Override
-    public ArrayList<Feld> möglicheZüge() {
+    @Override public ArrayList<Feld> möglicheZüge() {
         ArrayList<Feld> M = new ArrayList<>();
         ArrayList<Feld> felder = feld.brettGeben().felder;
         int i = felder.indexOf(feld) + 1;
@@ -30,12 +29,24 @@ public class Bauer extends Figur
             }
         }
 
-        if (feld.brettGeben().schwarz.contains(this)) {
+        if (feld.brettGeben().schwarz.contains(this))
+        {
             if (i + 8 < felder.size() && feld.brettGeben().weiß.contains(felder.get(i + 8).figurGeben()))
             {
                 M.add(felder.get(i + 8));
             }
             if (i - 8 >= 0 && feld.brettGeben().weiß.contains(felder.get(i - 8).figurGeben()))
+            {
+                M.add(felder.get(i - 8));
+            }
+        }
+        if (feld.brettGeben().weiß.contains(this))
+        {
+            if (i + 8 < felder.size() && feld.brettGeben().schwarz.contains(felder.get(i + 8).figurGeben()))
+            {
+                M.add(felder.get(i + 8));
+            }
+            if (i - 8 >= 0 && feld.brettGeben().schwarz.contains(felder.get(i - 8).figurGeben()))
             {
                 M.add(felder.get(i - 8));
             }
