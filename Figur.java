@@ -23,11 +23,11 @@ public class Figur
     public void Ziehen(Feld zielfeld)
     {
         Feld aktuell = feld;
-        feld.figurEntfernen(this);
-        if(feld.brettGeben().MattPrüfen(feld.brettGeben().momentanerSpielerGeben()) != 0)
+        feld.figurEntfernen();
+        if(feld.brettGeben().MattPrüfen(feld.brettGeben().momentanerSpielerGeben()) != false)
         {
             aktuell.figurHinzufügen(this);
-            break;
+            return;
         }
         Figur Feind = zielfeld.figurGeben();
         if(feld.brettGeben().schwarz.contains(Feind))
