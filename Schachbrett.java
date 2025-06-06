@@ -60,9 +60,9 @@ public class Schachbrett
             }
     }
 
-    public boolean MattPrüfen(boolean Farbe)
+    public boolean SchachPrüfen(boolean Farbe)
     {
-        if(Farbe == 0)
+        if(Farbe == false)
         {
             for (int i = 0; i < schwarz.size(); i++)
             {
@@ -88,7 +88,12 @@ public class Schachbrett
     {
         return momentanerSpieler;
     }
-    //public boolean PattPrüfen() {}
+    public void spielerWechseln()
+    {
+        momentanerSpieler = !momentanerSpieler;
+    }
+    public boolean MattPrüfen(boolean farbe) {return false;}
+    //public boolean MattPrüfen() {}
 
 }
 

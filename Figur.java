@@ -22,23 +22,26 @@ public class Figur
     }
     public void Ziehen(Feld zielfeld)
     {
+        Schachbrett brett = feld.brettGeben();
         Feld aktuell = feld;
         feld.figurEntfernen();
-        if(feld.brettGeben().MattPrüfen(feld.brettGeben().momentanerSpielerGeben()) != false)
+        if(brett.MattPrüfen(brett.momentanerSpielerGeben()) != false)
         {
             aktuell.figurHinzufügen(this);
             return;
         }
         Figur Feind = zielfeld.figurGeben();
-        if(feld.brettGeben().schwarz.contains(Feind))
+        if(brett.schwarz.contains(Feind))
         {
-            feld.brettGeben().schwarz.remove(Feind);
+            brett.schwarz.remove(Feind);
         }
         else
         {
-            feld.brettGeben().weiß.remove(Feind);
+            brett.weiß.remove(Feind);
         }
         zielfeld.figurHinzufügen(this);
         feld = zielfeld;
+        brett.MattPrüfen(brett.momentanerSpielerGeben()); //muss noch implementiert werden
+        brett.spielerWechseln();
     }
 }
