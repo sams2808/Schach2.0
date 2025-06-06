@@ -60,8 +60,35 @@ public class Schachbrett
             }
     }
 
-    //public boolean MattPrüfen() {}
-    //public boolean MattPrüfen() {}
+    public boolean MattPrüfen(boolean Farbe)
+    {
+        if(Farbe == 0)
+        {
+            for (int i = 0; i < schwarz.size(); i++)
+            {
+                if(schwarz.get(i).obSetztSchach())
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < weiß.size(); i++)
+            {
+                if(weiß.get(i).obSetztSchach())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean momentanerSpielerGeben()
+    {
+        return momentanerSpieler;
+    }
+    //public boolean PattPrüfen() {}
 
 }
 
