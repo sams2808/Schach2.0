@@ -20,4 +20,5 @@ public class Feld
     {
         return brett;
     }
+    public void FigurEntfernen(){figur = null}
 }

@@ -22,6 +22,15 @@ public class Figur
     }
     public void Ziehen(Feld zielfeld)
     {
-        Feld Feind = zielfeld.figurGeben();
+        Figur Feind = zielfeld.figurGeben();
+        if(feld.brettGeben().schwarz.contains(Feind))
+        {
+            feld.brettGeben().schwarz.remove(Feind);
+        }
+        else
+        {
+            feld.brettGeben().weiß.remove(Feind);
+        }
+        zielfeld.figurHinzufügen(this);
     }
 }
