@@ -20,4 +20,8 @@ public class Figur
         }
         return false;
     }
+    public void Ziehen(Feld zielfeld)
+    {
+        Feld Feind = zielfeld.figurGeben();
+    }
 }
