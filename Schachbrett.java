@@ -92,8 +92,6 @@ public class Schachbrett
     {
         momentanerSpieler = !momentanerSpieler;
     }
-    public boolean MattPrüfen(boolean farbe) {return false;}
-    //public boolean MattPrüfen() {}
 
 }
 
