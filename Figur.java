@@ -32,5 +32,7 @@ public class Figur
             feld.brettGeben().weiß.remove(Feind);
         }
         zielfeld.figurHinzufügen(this);
+        feld.figurEntfernen();
+        feld = zielfeld;
     }
 }

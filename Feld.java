@@ -20,5 +20,5 @@ public class Feld
     {
         return brett;
     }
-    public void FigurEntfernen(){figur = null}
+    public void figurEntfernen(){figur = null}
 }
