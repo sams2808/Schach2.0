@@ -63,7 +63,7 @@ public class Figur
         Schachbrett brett = feld.brettGeben();
         Feld aktuell = feld;
         feld.figurEntfernen();
-        if(brett.MattPrüfen(brett.momentanerSpielerGeben()) != false)
+        if(brett.SchachPrüfen(brett.momentanerSpielerGeben()) != false)
         {
             aktuell.figurHinzufügen(this);
             return;

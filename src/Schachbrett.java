@@ -62,7 +62,7 @@ public class Schachbrett
             }
     }
 
-    public boolean SchachPrüfen(boolean Farbe)
+    public boolean SchachPrüfen(boolean Farbe) //prüft ob Frabe im Schach steht
     {
         if(Farbe == false)
         {
