@@ -13,11 +13,6 @@ public class GUI extends JFrame {
 
     private GSchachbrett GSchachbrett;
     private Schachbrett logikBrett = new Schachbrett();
-    private int dragStartRow = -1;
-    private int dragStartCol = -1;
-    private int dragCurrentX = -1;
-    private int dragCurrentY = -1;
-    private Figur draggedFigur = null;
 
     public GUI() {
         setTitle("Schach");
@@ -63,6 +58,9 @@ public class GUI extends JFrame {
     }
 
     private class BoardPanel extends JPanel implements MouseListener, MouseMotionListener {
+        private int selectedRow = -1;
+        private int selectedCol = -1;
+
         public BoardPanel() {
             setPreferredSize(new Dimension(TILE_SIZE * COLS, TILE_SIZE * ROWS));
             addMouseListener(this);
@@ -79,76 +77,62 @@ public class GUI extends JFrame {
                     g.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                     Feld feld = GSchachbrett.getFeld(row, col);
                     Figur figur = feld.figurGeben();
-                    if (figur != null && (draggedFigur == null || row != dragStartRow || col != dragStartCol)) {
+                    if (figur != null) {
                         g.setColor(figur.getFarbe() == Figur.Farbe.WEISS ? Color.WHITE : Color.BLACK);
                         g.setFont(new Font("Serif", Font.PLAIN, 36));
                         g.drawString(figur.getSymbol(), col * TILE_SIZE + TILE_SIZE / 3, row * TILE_SIZE + 2 * TILE_SIZE / 3);
                     }
-                }
-            }
-            // Ziehende Figur als Symbol zeichnen
-            if (draggedFigur != null && dragCurrentX >= 0 && dragCurrentY >= 0) {
-                g.setColor(draggedFigur.getFarbe() == Figur.Farbe.WEISS ? Color.WHITE : Color.BLACK);
-                g.setFont(new Font("Serif", Font.PLAIN, 36));
-                g.drawString(draggedFigur.getSymbol(), dragCurrentX - TILE_SIZE / 2, dragCurrentY + TILE_SIZE / 3);
-            }
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent mouseEvent) {
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            int col = e.getX() / TILE_SIZE;
-            int row = e.getY() / TILE_SIZE;
-            if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
-                Feld feld = GSchachbrett.getFeld(row, col);
-                draggedFigur = feld.figurGeben();
-                if (draggedFigur != null) {
-                    dragStartRow = row;
-                    dragStartCol = col;
-                    dragCurrentX = e.getX();
-                    dragCurrentY = e.getY();
-                }
-            }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (draggedFigur != null) {
-                int col = e.getX() / TILE_SIZE;
-                int row = e.getY() / TILE_SIZE;
-                if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
-                    // Grafischer Zug
-                    GSchachbrett.moveFigur(dragStartRow, dragStartCol, row, col);
-                    // Logischer Zug
-                    String von = FeldNameFromCoords(dragStartRow, dragStartCol);
-                    String nach = FeldNameFromCoords(row, col);
-                    Feld logikVon = getLogikFeldByName(von);
-                    Feld logikNach = getLogikFeldByName(nach);
-                    if (logikVon != null && logikNach != null && logikVon.figurGeben() != null) {
-                        logikVon.figurGeben().Ziehen(logikNach);
-                        System.out.println("[Logik] Zug von " + von + " nach " + nach);
+                    // Auswahl hervorheben
+                    if (row == selectedRow && col == selectedCol) {
+                        g.setColor(Color.RED);
+                        g.drawRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                        g.drawRect(col * TILE_SIZE + 1, row * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
                     }
                 }
-                draggedFigur = null;
-                dragStartRow = dragStartCol = -1;
-                dragCurrentX = dragCurrentY = -1;
+            }
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            int col = e.getX() / TILE_SIZE;
+            int row = e.getY() / TILE_SIZE;
+            if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
+            Feld feld = GSchachbrett.getFeld(row, col);
+            if (selectedRow == -1 && selectedCol == -1) {
+                // Auswahl einer Figur
+                if (feld.figurGeben() != null) {
+                    selectedRow = row;
+                    selectedCol = col;
+                    repaint();
+                }
+            } else {
+                // Zielauswahl und Zug ausführen
+                GSchachbrett.moveFigur(selectedRow, selectedCol, row, col);
+                // Logikbrett synchronisieren
+                String von = FeldNameFromCoords(selectedRow, selectedCol);
+                String nach = FeldNameFromCoords(row, col);
+                Feld logikVon = getLogikFeldByName(von);
+                Feld logikNach = getLogikFeldByName(nach);
+                if (logikVon != null && logikNach != null && logikVon.figurGeben() != null) {
+                    logikVon.figurGeben().Ziehen(logikNach);
+                    System.out.println("[Logik] Zug von " + von + " nach " + nach);
+                }
+                selectedRow = selectedCol = -1;
                 repaint();
             }
         }
 
         @Override
-        public void mouseEntered(MouseEvent mouseEvent) {
-
-        }
+        public void mousePressed(MouseEvent e) {}
 
         @Override
-        public void mouseExited(MouseEvent mouseEvent) {
+        public void mouseReleased(MouseEvent e) {}
 
-        }
+        @Override
+        public void mouseEntered(MouseEvent mouseEvent) {}
+
+        @Override
+        public void mouseExited(MouseEvent mouseEvent) {}
 
         // Hilfsmethode: Koordinaten zu Feldname
         private String FeldNameFromCoords(int row, int col) {
@@ -166,16 +150,9 @@ public class GUI extends JFrame {
         }
 
         @Override
-        public void mouseDragged(MouseEvent e) {
-            if (draggedFigur != null) {
-                dragCurrentX = e.getX();
-                dragCurrentY = e.getY();
-                repaint();
-            }
-        }
+        public void mouseDragged(MouseEvent e) {}
 
         @Override
-        public void mouseMoved(MouseEvent e) {
-        }
+        public void mouseMoved(MouseEvent e) {}
     }
 }
