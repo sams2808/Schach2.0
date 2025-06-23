@@ -62,32 +62,21 @@ public class GSchachbrett {
     }
 
     /**
-     * Führt einen Zug von einem Feld auf ein anderes aus und gibt die Schachnotation des Zuges aus.
+     * Führt einen Zug von einem Feld auf ein anderes aus und gibt die beteiligten Felder als Rückgabe zurück.
      * @param fromRow Startreihe
      * @param fromCol Startspalte
      * @param toRow Zielreihe
      * @param toCol Zielspalte
+     * @return Ein Array mit [Startfeld, Zielfeld] (beides Feld-Objekte)
      */
-    public void moveFigur(int fromRow, int fromCol, int toRow, int toCol) {
+    public Feld[] moveFigur(int fromRow, int fromCol, int toRow, int toCol) {
         Feld from = getFeld(fromRow, fromCol);
         Feld to = getFeld(toRow, toCol);
-
         if (from.figurGeben() != null) {
-            String von = from.getName();
-            String nach = to.getName();
-            // Exakte Zugausgabe
-            System.out.println("Zug von " + von.toLowerCase() + " nach " + nach.toLowerCase());
-            // ... bisherige Schachnotation kann optional zusätzlich ausgegeben werden...
             to.setFigur(from.figurGeben());
             from.setFigur(null);
-
         }
-        else
-        {
-            System.out.println("Ungültiger Zug: Kein Figur auf dem Startfeld " + from.getName());
-            //return null; // oder eine andere Fehlerbehandlung
-        }
-
+        return new Feld[]{from, to};
     }
 
     private List<Feld> getGFelder() {
