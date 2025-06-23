@@ -4,9 +4,19 @@ import java.util.ArrayList;
 
 public class Figur
 {
+    public Figur(String symbol, Farbe farbe, Feld feld) {
+        this.symbol = symbol;
+        this.farbe = farbe;
+        this.feld = feld;
+        feld.figurHinzufügen(this);
+    }
+
+    public Figur() {
+    }
+
     public enum Farbe { WEISS, SCHWARZ }
-    private final String symbol;
-    private final Farbe farbe;
+    private  String symbol;
+    private  Farbe farbe;
     private Feld feld;
 
     public Figur(String symbol, Farbe farbe) {
@@ -78,8 +88,8 @@ public class Figur
             brett.weiß.remove(Feind);
         }
         zielfeld.figurHinzufügen(this);
-        feld = zielfeld;
-        brett.MattPrüfen(brett.momentanerSpielerGeben()); //muss noch implementiert werden
-        brett.spielerWechseln();
+//        feld = zielfeld;
+//        brett.MattPrüfen(brett.momentanerSpielerGeben()); //muss noch implementiert werden
+//        brett.spielerWechseln();
     }
 }
